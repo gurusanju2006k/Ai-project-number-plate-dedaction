@@ -1,0 +1,147 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+
+    background: linear-gradient(-45deg, #667eea, #764ba2, #ff512f, #dd2476);
+    background-size: 400% 400%;
+    animation: bgMove 10s ease infinite;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes bgMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px);
+
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    width: 350px;
+
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.fade-in {
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(30px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+.title {
+    color: white;
+}
+
+/* 🔥 PREVIEW BOX */
+.preview-box {
+    position: relative;
+    width: 100%;
+    height: 230px;
+    background: black;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+/* IMAGE + VIDEO */
+#preview, video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: none;
+}
+
+/* 🔥 SCANNER LINE */
+.scanner {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: lime;
+    box-shadow: 0 0 10px lime;
+
+    animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+    0% { top: 0; }
+    100% { top: 100%; }
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+/* BUTTONS */
+button {
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: white;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* DETECT PULSE */
+.detect-btn {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {box-shadow: 0 0 0px rgba(0,114,255,0.5);}
+    50% {box-shadow: 0 0 20px rgba(0,114,255,1);}
+    100% {box-shadow: 0 0 0px rgba(0,114,255,0.5);}
+}
+
+/* CONTROLS */
+.controls {
+    display: flex;
+    gap: 10px;
+}
+
+.controls button {
+    width: 50%;
+}
+
+/* SCROLL */
+.card::-webkit-scrollbar {
+    width: 5px;
+}
+
+.card::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 10px;
+}

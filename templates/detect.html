@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Detection</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/detect.css' %}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card fade-in">
+
+        <h2 class="title">🚗 Smart Detection</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- FILE INPUT -->
+            <input type="file" id="imageInput" name="image" accept="image/*" onchange="previewImage(event)">
+
+            <!-- HIDDEN INPUT (for camera capture) -->
+            <input type="hidden" name="captured_image" id="capturedImage">
+
+            <!-- PREVIEW -->
+            <div class="preview-box">
+                <img id="preview" style="display:none;">
+                <video id="video" autoplay style="display:none;"></video>
+                <div class="scanner"></div>
+            </div>
+
+            <div class="controls">
+                <button type="button" onclick="startCamera()">📷 Camera</button>
+                <button type="button" onclick="capture()">📸 Capture</button>
+            </div>
+
+            <button type="submit" class="detect-btn">🚀 Detect Plate</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+function previewImage(event){
+    const file = event.target.files[0];
+    const preview = document.getElementById('preview');
+    const video = document.getElementById('video');
+
+    if(file){
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "block";
+        video.style.display = "none";
+    }
+}
+
+function startCamera(){
+    const video = document.getElementById('video');
+    const preview = document.getElementById('preview');
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+        video.srcObject = stream;
+        video.style.display = "block";
+        preview.style.display = "none";
+    });
+}
+
+function capture(){
+    const video = document.getElementById('video');
+    const preview = document.getElementById('preview');
+    const hiddenInput = document.getElementById('capturedImage');
+
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0);
+
+    const dataURL = canvas.toDataURL("image/png");
+
+    preview.src = dataURL;
+    preview.style.display = "block";
+    video.style.display = "none";
+
+    // SAVE IMAGE TO HIDDEN INPUT
+    hiddenInput.value = dataURL;
+}
+</script>
+
+</body>
+</html>

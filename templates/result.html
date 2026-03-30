@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Detection Result</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/result.css' %}">
+
+    <style>
+        .badge {
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: white;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .high { background: green; }
+        .medium { background: orange; }
+        .low { background: red; }
+
+        .ai-tag {
+            font-size: 12px;
+            color: #00e5ff;
+            margin-bottom: 10px;
+        }
+
+        .raw {
+            font-size: 12px;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<div class="container">
+
+    <div class="card fade-in">
+
+        <h2>🧠 AI Detection Result</h2>
+
+        <p class="ai-tag">⚡ AI Enhanced Recognition System</p>
+
+        <img src="{{ image_url }}" class="image">
+
+        {% if plate %}
+
+            <!-- 🔥 CONFIDENCE BADGE -->
+            {% if confidence > 80 %}
+                <span class="badge high">High Accuracy</span>
+            {% elif confidence > 50 %}
+                <span class="badge medium">Moderate Accuracy</span>
+            {% else %}
+                <span class="badge low">Low Accuracy</span>
+            {% endif %}
+
+            <!-- 🔥 PLATE -->
+            <h3 class="plate">{{ plate }}</h3>
+
+            <!-- 🔥 RAW OUTPUT (ADVANCED LOOK 😎) -->
+            {% if raw_plate %}
+                <p class="raw">Raw OCR: {{ raw_plate }}</p>
+            {% endif %}
+
+            <p class="state">📍 {{ state }}</p>
+
+            <!-- 🔥 PROGRESS BAR -->
+            <div class="progress">
+                <div class="bar" style="width: {{ confidence }}%;"></div>
+            </div>
+
+            <p class="percent">{{ confidence }}%</p>
+
+            <!-- 🔥 SMART MESSAGE -->
+            <p class="message">
+                {% if confidence > 80 %}
+                    ✅ AI confidently detected the number plate
+                {% elif confidence > 50 %}
+                    ⚠️ Detection successful but may contain minor errors
+                {% else %}
+                    ❌ Low confidence, recommend re-capturing image
+                {% endif %}
+            </p>
+
+        {% else %}
+
+            <p class="error">
+                ❌ No number plate detected. Try a clearer image.
+            </p>
+
+        {% endif %}
+
+        <a href="/detect/" class="btn">🔄 Try Again</a>
+
+    </div>
+
+</div>
+
+<script>
+    // Animate bar
+    window.onload = function(){
+        let bar = document.querySelector(".bar");
+        if(bar){
+            let width = bar.style.width;
+            bar.style.width = "0%";
+            setTimeout(() => {
+                bar.style.width = width;
+            }, 400);
+        }
+
+        // 🔊 VOICE OUTPUT
+        let plate = "{{ plate|default:'' }}";
+        let state = "{{ state|default:'' }}";
+        let confidence = "{{ confidence|default:0 }}";
+
+        if(plate){
+            let msg = new SpeechSynthesisUtterance(
+                "AI detected number plate " + plate + 
+                ". It belongs to " + state +
+                ". Confidence is " + confidence + " percent"
+            );
+
+            msg.rate = 1;
+            msg.pitch = 1;
+            msg.volume = 1;
+
+            speechSynthesis.speak(msg);
+        }
+    }
+</script>
+
+</body>
+</html>

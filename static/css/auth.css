@@ -1,0 +1,99 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    background: linear-gradient(-45deg, #667eea, #764ba2, #ff512f, #dd2476);
+    background-size: 400% 400%;
+    animation: bgMove 10s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Card */
+.card {
+    width: 320px;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    text-align: center;
+    animation: fadeIn 1s ease;
+}
+
+/* Title */
+h2 {
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #000000, #434343);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px white;
+}
+
+/* Link */
+.link {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.link a {
+    color: white;
+    font-weight: bold;
+}
+
+/* Error */
+.error {
+    color: #ff4d6d;
+    margin-top: 10px;
+}
+
+/* Animations */
+@keyframes bgMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform:translateY(30px);}
+    to {opacity:1; transform:translateY(0);}
+}
