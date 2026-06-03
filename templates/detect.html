@@ -73,6 +73,11 @@ function capture(){
     const preview = document.getElementById('preview');
     const hiddenInput = document.getElementById('capturedImage');
 
+    if(video.videoWidth === 0){
+        alert("Camera not ready. Wait 1 second and try again.");
+        return;
+    }
+
     const canvas = document.createElement('canvas');
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
@@ -80,13 +85,18 @@ function capture(){
     const ctx = canvas.getContext('2d');
     ctx.drawImage(video, 0, 0);
 
-    const dataURL = canvas.toDataURL("image/png");
+    const dataURL = canvas.toDataURL("image/jpeg");
+
+    // 🔥 IMPORTANT CHECK
+    if(!dataURL || dataURL === "data:,"){
+        alert("Failed to capture image. Try again.");
+        return;
+    }
 
     preview.src = dataURL;
     preview.style.display = "block";
     video.style.display = "none";
 
-    // SAVE IMAGE TO HIDDEN INPUT
     hiddenInput.value = dataURL;
 }
 </script>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live ANPR System</title>
+
+    <style>
+        body {
+            margin:0;
+            background:#0b0f1a;
+            color:white;
+            font-family:Arial;
+            text-align:center;
+        }
+
+        video {
+            width: 60%;
+            margin-top: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #00e5ff;
+        }
+
+        canvas {
+            display:none;
+        }
+
+        .box {
+            margin-top:20px;
+            font-size:20px;
+            color:#00e5ff;
+        }
+
+        .scan-line {
+            position:absolute;
+            width:60%;
+            height:3px;
+            background:#00e5ff;
+            left:20%;
+            animation:scan 2s infinite;
+        }
+
+        @keyframes scan {
+            0%{top:20%;}
+            100%{top:70%;}
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>🚗 LIVE ANPR CAMERA</h2>
+
+<div class="scan-line"></div>
+
+<video id="video" autoplay></video>
+<canvas id="canvas"></canvas>
+
+<div class="box" id="result">Waiting for detection...</div>
+
+<script>
+const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+const resultBox = document.getElementById("result");
+
+// start camera
+navigator.mediaDevices.getUserMedia({ video: true })
+.then(stream => {
+    video.srcObject = stream;
+});
+
+// send frames every 1 second
+setInterval(() => {
+
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    ctx.drawImage(video, 0, 0);
+
+    let imageData = canvas.toDataURL("image/jpeg");
+
+    fetch("/process_frame/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: JSON.stringify({ image: imageData })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if(data.plate){
+            resultBox.innerHTML =
+            "🚘 Plate: " + data.plate +
+            "<br>📍 State: " + data.state +
+            "<br>🎯 Confidence: " + data.confidence + "%";
+        }
+
+    });
+
+}, 1000);
+</script>
+
+</body>
+</html>

@@ -11,4 +11,6 @@ urlpatterns = [
     path('detect/', views.detect_plate, name='detect'),
     path('history/', views.history, name='history'),
     path('register/', views.register_view),
+    path("live/", views.detect_frame),
+    path("process_frame/", views.process_frame),
 ]

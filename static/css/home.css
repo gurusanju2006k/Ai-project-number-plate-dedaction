@@ -1,53 +1,38 @@
-/* Base */
 body {
     margin: 0;
-    font-family: 'Poppins', sans-serif;
-    height: 100vh;
-    overflow: hidden;
+    font-family: "Segoe UI", sans-serif;
+    background: #0b0f1a;
     color: white;
+    overflow: hidden;
 }
 
-/* Animated Gradient Background */
-body {
-    background: linear-gradient(-45deg, #ff512f, #dd2476, #24c6dc, #00f260);
-    background-size: 400% 400%;
-    animation: gradientMove 10s ease infinite;
-}
-
-/* Floating Glow Circles */
 .bg-blobs span {
     position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.6;
-    animation: float 10s infinite alternate;
-}
-
-.bg-blobs span:nth-child(1) {
     width: 300px;
     height: 300px;
-    background: #ff512f;
-    top: 10%;
-    left: 10%;
+    background: #00e5ff;
+    filter: blur(120px);
+    border-radius: 50%;
+    animation: float 8s infinite ease-in-out;
 }
 
 .bg-blobs span:nth-child(2) {
-    width: 250px;
-    height: 250px;
-    background: #00f260;
-    bottom: 10%;
-    right: 15%;
+    background: #ff00ff;
+    left: 60%;
+    top: 20%;
 }
 
 .bg-blobs span:nth-child(3) {
-    width: 200px;
-    height: 200px;
-    background: #24c6dc;
-    top: 50%;
-    left: 60%;
+    background: #00ff88;
+    left: 30%;
+    top: 60%;
 }
 
-/* Container */
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-50px); }
+}
+
 .container {
     height: 100vh;
     display: flex;
@@ -55,58 +40,41 @@ body {
     align-items: center;
 }
 
-/* Card */
 .card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    padding: 50px;
+    border-radius: 20px;
     text-align: center;
-    padding: 40px;
-    border-radius: 25px;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(25px);
-    box-shadow: 0 10px 50px rgba(0,0,0,0.4);
+    box-shadow: 0 0 40px rgba(0,229,255,0.2);
     animation: fadeIn 1s ease;
 }
 
-/* Title */
 h1 {
-    font-size: 50px;
+    font-size: 40px;
     margin-bottom: 10px;
 }
 
-/* Tagline */
 .tagline {
-    font-size: 18px;
-    margin-bottom: 25px;
+    opacity: 0.7;
+    margin-bottom: 30px;
 }
 
-/* Button */
 .btn {
-    padding: 14px 30px;
-    border-radius: 30px;
-    text-decoration: none;
+    display: inline-block;
+    padding: 12px 25px;
+    background: linear-gradient(90deg,#00e5ff,#ff00ff);
     color: white;
-    font-weight: bold;
-    background: linear-gradient(135deg, #000000, #434343);
+    text-decoration: none;
+    border-radius: 30px;
     transition: 0.3s;
 }
 
 .btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 25px white;
-}
-
-/* Animations */
-@keyframes gradientMove {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-}
-
-@keyframes float {
-    0% { transform: translateY(0px);}
-    100% { transform: translateY(-40px);}
 }
 
 @keyframes fadeIn {
-    from {opacity:0; transform:translateY(40px);}
-    to {opacity:1; transform:translateY(0);}
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
 }

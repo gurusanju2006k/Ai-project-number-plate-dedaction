@@ -65,8 +65,13 @@ def detect_plate(request):
 
         # ✅ CASE 2: IMAGE FROM CAMERA (BASE64)
         elif request.POST.get('captured_image'):
-            format, imgstr = request.POST['captured_image'].split(';base64,')
-            ext = format.split('/')[-1]
+            captured = request.POST.get('captured_image', '')
+
+            imgstr = None
+
+            if captured and ';base64,' in captured:
+                imgstr = captured.split(';base64,')[1]
+            ext = captured.split('/')[-1]
             image = ContentFile(base64.b64decode(imgstr), name='captured.' + ext)
 
         # ❌ NO IMAGE
@@ -108,7 +113,35 @@ def detect_plate(request):
         return render(request, 'result.html', context)
 
     return render(request, 'detect.html')
+import cv2
+import base64
+import numpy as np
+from .ai_model import process_image
 
+def detect_frame(request):
+    return render(request, "live.html")
+
+import json
+from django.http import JsonResponse
+import base64
+import numpy as np
+import cv2
+from .ai_model import process_image, process_image_from_array
+
+def process_frame(request):
+
+    data = json.loads(request.body)
+    image_data = data['image']
+
+    image_data = image_data.split(",")[1]
+    image_bytes = base64.b64decode(image_data)
+
+    nparr = np.frombuffer(image_bytes, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+    result = process_image_from_array(img)
+
+    return JsonResponse(result)
 
 # 📊 HISTORY
 @login_required
