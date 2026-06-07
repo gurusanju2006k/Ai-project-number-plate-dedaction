@@ -35,5 +35,5 @@ An AI-powered system that detects and recognizes vehicle number plates using Com
 
 ## Detection Result
 
-![Result](images/Result(2).png)
+![Result](result.png)
 
