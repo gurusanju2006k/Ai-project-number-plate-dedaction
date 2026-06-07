@@ -22,3 +22,21 @@ An AI-powered system that detects and recognizes vehicle number plates using Com
 - Real-time Camera Support
 - Database Integration
 - Dashboard Analytics
+
+- # Automatic Number Plate Recognition
+
+## Home Page
+
+![Home Page](home.png)
+
+## Upload Page
+
+![Upload Page](input.png)
+
+## Detection Result
+
+![Result](result.png)
+
+## Detection History
+
+![Result](history.png)
