@@ -27,7 +27,7 @@ An AI-powered system that detects and recognizes vehicle number plates using Com
 
 ## Home Page
 
-![Home Page](home.png)
+![Home Page](home.png.png)
 
 ## Upload Page
 
